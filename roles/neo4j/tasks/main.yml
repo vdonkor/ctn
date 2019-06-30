@@ -63,4 +63,4 @@
     line: 'dbms.unmanaged_extension_classes=org.neo4j.graphql=/graphql'
     regex: 'dbms.directories.data=/var/lib/neo4j/data'
     insertbefore: 'BOF'
-  
+  notify: restart neo4j
