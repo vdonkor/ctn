@@ -59,7 +59,7 @@
 
 - name: add graphql configuration
   lineinfile:
-    path: /etc/neo4j/neo4j.conf"
+    path: /etc/neo4j/neo4j.conf
     line: 'dbms.unmanaged_extension_classes=org.neo4j.graphql=/graphql'
     regex: 'dbms.directories.data=/var/lib/neo4j/data'
     insertbefore: 'BOF'
