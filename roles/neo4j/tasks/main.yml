@@ -1,17 +1,5 @@
 ---
 # tasks file for neo4j
-- name: create neo4j group
-  group:
-    name: neo4j
-    gid: 101
-    state: present
-
-- name: create neo4j user
-  user:
-    name: neo4j
-    uid: 101
-    group: neo4j
-
 - name: import neo4j gpg key
   rpm_key:
     state: present
@@ -29,7 +17,7 @@
 - name: install neo4j
   yum:
     name:
-     - neo4j
+     - NEO4J_ACCEPT_LICENSE_AGREEMENT=yes neo4j-enterprise
      - wget
 
 - name: start and enable neo4j service
