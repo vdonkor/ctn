@@ -1,0 +1,7 @@
+---
+- name: setup neo4j server
+  hosts: localhost
+  become: yes
+
+  roles:
+    - neo4j

@@ -1,0 +1,15 @@
+version: '3.1'
+services:
+  match:
+    image: vdonkor/tomcat9
+    ports:
+      - 80:8080
+    volumes:
+      - {{k9dc_home}}/conf/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+      - {{k9dc_home}}/conf/context.xml:/usr/local/tomcat/webapps/host-manager/META-INF/context.xml
+      - {{k9dc_home}}/conf/manager.xml:/usr/local/tomcat/conf/Catalina/localhost/manager.xml
+    restart: always
+    environment:
+      - NEW_RELIC_LICENSE_KEY={{ new_relic_license_key }}
+      - NEW_RELIC_APP_NAME={{ app_name }}
+

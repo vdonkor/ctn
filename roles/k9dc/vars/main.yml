@@ -1,0 +1,4 @@
+---
+# vars file for k9dc
+docker_home: /local/docker
+k9dc_home: /local/k9dc
