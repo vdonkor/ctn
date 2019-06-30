@@ -1,2 +1,3 @@
 ---
 # vars file for neo4j
+neo4j_home: /var/lib/neo4j
