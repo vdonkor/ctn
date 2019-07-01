@@ -68,3 +68,10 @@
     regex: 'dbms.directories.data=/var/lib/neo4j/data'
     insertbefore: 'BOF'
   notify: restart neo4j
+
+- name: allow connection from external addresses
+  lineinfile:
+    path: /etc/neo4j/neo4j.conf
+    line: 'dbms.connectors.default_listen_address=0.0.0.0'
+    regex: '#dbms.connectors.default_listen_address=0.0.0.0'
+  notify: restart neo4j
