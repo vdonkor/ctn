@@ -4,5 +4,5 @@
   become: yes
 
   roles:
-    - setup-docker
-    - setup-k9dc
+    - docker
+    - k9dc
