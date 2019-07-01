@@ -24,6 +24,12 @@
       - http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
     state: latest
 
+- name: enable and start firewalld
+  service:
+    name: firewalld
+    state: started
+    enabled: yes
+
 - name: enable extra repos when running on red hat
   command: subscription-manager repos --enable "rhel-*-optional-rpms" --enable "rhel-*-extras-rpms"
   when: ansible_distribution == 'Red Hat Enterprise Linux'

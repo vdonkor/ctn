@@ -1,5 +1,19 @@
 ---
 # tasks file for neo4j
+
+- name: install systems packages
+  yum:
+    name: 
+      - firewalld
+      - http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    state: latest
+
+- name: enable and start firewalld
+  service:
+    name: firewalld
+    state: started
+    enabled: yes
+
 - name: import neo4j gpg key
   rpm_key:
     state: present

@@ -4,4 +4,5 @@ easy_install pip
 pip install ansible boto boto3 botocore
 git clone https://github.com/vdonkor/ctn.git
 cd ctn
-ansible-playbook k9dc.yml 
+echo "rancom2001" > mypassword
+ansible-playbook --vault-password-file mypassword k9dc.yml 
