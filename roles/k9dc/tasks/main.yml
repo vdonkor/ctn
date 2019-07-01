@@ -32,6 +32,7 @@
   loop:
     - "{{ k9dc_home }}"
     - "{{ docker_home }}"
+    - "{{ k9dc_home }}/logs"
 
 - name: copy docker files
   template:
