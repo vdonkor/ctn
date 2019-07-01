@@ -44,15 +44,15 @@
     - {src: 'docker-compose.yml.j2',dest: '{{docker_home}}/docker-compose.yml'}
 
 - name: start the k9dc
-  docker_service:
+  docker_compose:
     project_src: "{{ docker_home }}"
     state: present
 
 - name: download initial master application
-  s3:
+  aws_s3:
     bucket: "{{bucket_name}}"
     object: "{{war_file}}"
-    dest: /tmp/
+    dest: /tmp/{{war_file}}
     mode: get
 
 - name: deploy master application
