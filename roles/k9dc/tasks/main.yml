@@ -46,3 +46,13 @@
   docker_service:
     project_src: "{{ docker_home }}"
     state: present
+
+- name: download initial master application
+  s3:
+    bucket: "{{bucket_name}}"
+    object: "{{war_file}}"
+    dest: /tmp/
+    mode: get
+
+- name: deploy master application
+  command: docker cp /tmp/{{war_file}} {{container_name}}:/usr/local/tomcat/webapps

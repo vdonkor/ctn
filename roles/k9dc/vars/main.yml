@@ -2,3 +2,6 @@
 # vars file for k9dc
 docker_home: /local/docker
 k9dc_home: /local/k9dc
+bucket_name: icdc-dev-deployments
+war_file: ICDC.war
+container_name: k9dc
