@@ -88,7 +88,7 @@ pipeline {
             for server in $TOMCAT01_IP $TOMCAT02_IP
             do
               scp -i ${deployer_key} ICDC.war deployer@$server:/local/deployments
-              ssh deployer@$server <<'EOF'
+              ssh deployer@$server <<-EOF
                 cd /local/deployments
                 sudo docker cp ICDC.war k9dc:/usr/local/tomcat/webapps
               EOF
