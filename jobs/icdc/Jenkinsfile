@@ -57,7 +57,8 @@ pipeline {
     }
     stage('Build') {
       environment {
-        TOMCAT_IP = "${TOMCAT_IP}"
+        TOMCAT01_IP = "${TOMCAT01_IP}"
+        TOMCAT02_IP = "${TOMCAT02_IP}"
         SLACK_URL = "${SLACK_URL}"
         // NEO4J_IP  = "${NEO4J_IP}"
         NEO4J_IP = "neo4j.essential-dev.com"
@@ -82,7 +83,17 @@ pipeline {
       steps {
         ansiColor('xterm') {
           withCredentials([sshUserPrivateKey(credentialsId: 'deployer_ssh_key', keyFileVariable: 'deployer_key', passphraseVariable: '', usernameVariable: 'deployer')]) {
-            sh "cd target && scp "
+            sh '''
+            cd target
+            for server in $TOMCAT01_IP $TOMCAT02_IP
+            do
+              scp -i ${deployer_key} ICDC.war deployer@$server:/local/deployments
+              ssh deployer@$server << EOF
+                cd /local/deployments
+                sudo docker cp ICDC.war k9dc:/usr/local/tomcat/webapps
+              EOF
+            done
+            '''
           }
         }
       }
