@@ -83,17 +83,18 @@ pipeline {
       steps {
         ansiColor('xterm') {
           withCredentials([sshUserPrivateKey(credentialsId: 'deployer_ssh_key', keyFileVariable: 'deployer_key', passphraseVariable: '', usernameVariable: 'deployer')]) {
-            sh '''
+            sh """
+            #!/bin/bash
             cd target
-            for server in $TOMCAT01_IP $TOMCAT02_IP
+            for server in $TOMCAT01_IP $TOMCAT02_IP;
             do
-              scp -i ${deployer_key} ICDC.war deployer@$server:/local/deployments
-              ssh deployer@$server <<-EOF
+              scp -i ${deployer_key} ICDC.war deployer@${server}:/local/deployments
+              ssh deployer@${server} <<-EOF
                 cd /local/deployments
                 sudo docker cp ICDC.war k9dc:/usr/local/tomcat/webapps
               EOF
             done
-            '''.stripIndent()
+            """.stripIndent()
           }
         }
       }
