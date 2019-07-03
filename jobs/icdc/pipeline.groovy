@@ -1,6 +1,6 @@
-pipelineJob('icdc/c9c') {
+pipelineJob('icdc/k9dc') {
 
-  def repo = 'https://github.com/gklu/devops.git' 
+  def repo = 'https://github.com/vdonkor/ctn.git' 
   description("ICDC pipeline Job") 
 
   definition  {

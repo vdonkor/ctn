@@ -81,17 +81,17 @@ pipeline {
       }
       steps {
         ansiColor('xterm') {
-          withCredentials([usernameColonPassword(credentialsId: 'c9c-deployer', variable: 'DEPLOYER')]) {
-            sh 'cd target && curl -T ICDC.war http://$DEPLOYER@$TOMCAT_IP/manager/text/deploy?path=/ICDC&update=true'
+          withCredentials([sshUserPrivateKey(credentialsId: 'deployer_ssh_key', keyFileVariable: 'deployer_key', passphraseVariable: '', usernameVariable: 'deployer')]) {
+            sh "cd target && scp "
           }
         }
       }
     }
   }
-  post {
-    always {
+  // post {
+  //   always {
       
-      sendSlackMessage()
-    }
-  }
+  //     sendSlackMessage()
+  //   }
+  // }
 }

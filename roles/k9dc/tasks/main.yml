@@ -33,6 +33,7 @@
     - "{{ k9dc_home }}"
     - "{{ docker_home }}"
     - "{{ k9dc_home }}/logs"
+    - "{{ deployments }}"
 
 - name: copy docker files
   template:
