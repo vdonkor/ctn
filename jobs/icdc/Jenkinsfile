@@ -83,7 +83,7 @@ pipeline {
       steps {
         ansiColor('xterm') {
           withCredentials([sshUserPrivateKey(credentialsId: 'deployer_ssh_key', keyFileVariable: 'deployer_key', passphraseVariable: '', usernameVariable: 'deployer')]) {
-            sh '''
+            sh """
             cd target
             for server in $TOMCAT01_IP $TOMCAT02_IP
             do
@@ -93,7 +93,7 @@ pipeline {
                 sudo docker cp ICDC.war k9dc:/usr/local/tomcat/webapps
               EOF
             done
-            '''
+            """.stripIndent()
           }
         }
       }
