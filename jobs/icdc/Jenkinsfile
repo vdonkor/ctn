@@ -1,0 +1,97 @@
+//load shared library for slack notification
+//@Library('shared-library')_
+
+import groovy.json.JsonOutput
+
+def sendSlackMessage() {
+  jenkins_image = ":jenkins:"
+  beer_image = ":beer:"
+  long epoch = System.currentTimeMillis()/1000
+  def BUILD_COLORS = ['SUCCESS': 'good', 'FAILURE': 'danger', 'UNSTABLE': 'danger', 'ABORTED': 'danger']
+  
+  def slack = JsonOutput.toJson(
+      [
+            icon_emoji: jenkins_image,
+            attachments: [[
+              title: "Jenkins Job Alert - ${currentBuild.currentResult}",
+              text:  "Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}  ${beer_image}\n Details at: ${env.BUILD_URL}console",
+              fallback: "ICDC Jenkins Build",
+              color: "${BUILD_COLORS[currentBuild.currentResult]}",
+              footer: "icdc devops",
+              ts: epoch,
+              mrkdwn_in: ["footer", "title"],
+           ]]
+        ]
+    )
+    try {
+        sh "curl -X POST -H 'Content-type: application/json' --data '${slack}'  '${SLACK_URL}'"
+    } catch (err) {
+        echo "${err} Slack notify failed"
+    }
+}
+
+pipeline {
+
+  agent {
+    node {
+      label 'icdc_maven'
+    }
+  }
+  triggers {
+      cron('H 5 * * 1-5')
+  }
+  options {
+    timestamps()
+  }
+  tools { 
+    maven 'maven-3.6.1' 
+    jdk 'jdk11' 
+  }
+  stages {
+    stage('Checkout') {
+      steps {
+        git branch: 'master',
+            url: 'https://github.com/CBIIT/icdc-codebase'
+            //credentialsId: 'vdonkor'
+      }
+    }
+    stage('Build') {
+      environment {
+        TOMCAT_IP = "${TOMCAT_IP}"
+        SLACK_URL = "${SLACK_URL}"
+        // NEO4J_IP  = "${NEO4J_IP}"
+        NEO4J_IP = "neo4j.essential-dev.com"
+      }
+      steps {
+        withCredentials([string(credentialsId: 'authorization_bearer', variable: 'BEARER'), usernamePassword(credentialsId: 'neo4j_user', passwordVariable: 'NEO4J_PASSWORD', usernameVariable: 'NEO4J_USER')]) {
+          sh "cd ${WORKSPACE}/src/main/resources/ && mv application_example.properties application.properties"
+          sh "cd ${WORKSPACE}/src/main/resources && sed -i 's/localhost/${NEO4J_IP}/g' application.properties"
+          sh "cd ${WORKSPACE}/src/main/resources && sed -i 's/Basic 123456/${BEARER}/' application.properties"
+          sh "cd ${WORKSPACE}/src/main/resources && sed -i 's/password=${NEO4J_IP}/password=${NEO4J_PASSWORD}/' application.properties"
+          sh "mvn package -DskipTests"
+          sh "mv target/ICDC-0.0.1.war target/ICDC.war"
+        }
+      }
+    }
+    stage('Deploy') {
+      when {
+        expression {
+          currentBuild.result == null || currentBuild.result == 'SUCCESS' 
+        }
+      }
+      steps {
+        ansiColor('xterm') {
+          withCredentials([usernameColonPassword(credentialsId: 'c9c-deployer', variable: 'DEPLOYER')]) {
+            sh 'cd target && curl -T ICDC.war http://$DEPLOYER@$TOMCAT_IP/manager/text/deploy?path=/ICDC&update=true'
+          }
+        }
+      }
+    }
+  }
+  post {
+    always {
+      
+      sendSlackMessage()
+    }
+  }
+}
