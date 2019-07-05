@@ -61,6 +61,28 @@
     owner: neo4j
     group: neo4j
 
+
+- name: change neo4j parameters
+  lineinfile:
+    path: /etc/neo4j/neo4j.conf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  with_items:
+    - { regexp: '^#dbms.connectors.default_listen_address=0.0.0.0', line: 'dbms.connectors.default_listen_address=0.0.0.0' }
+    - { regexp: '^#dbms.connector.bolt.listen_address=:7687', line: 'dbms.connector.bolt.listen_address=0.0.0.0:7687' }
+    - { regexp: '^#bolt.ssl_policy=legacy', line: 'bolt.ssl_policy=default' }
+    - { regexp: '^#dbms.ssl.policy.default.base_directory=certificates/default', line: 'dbms.ssl.policy.default.base_directory=/var/lib/neo4j/certificates' }
+    - { regexp: '#dbms.ssl.policy.default.allow_key_generation=false', line: 'dbms.ssl.policy.default.allow_key_generation=false' }
+    - { regexp: '^#dbms.ssl.policy.default.private_key=', line: 'dbms.ssl.policy.default.private_key=/var/lib/neo4j/certificates/neo4j.key' }
+    - { regexp: '^#dbms.ssl.policy.default.public_certificate=', line: 'dbms.ssl.policy.default.public_certificate=/var/lib/neo4j/certificates/neo4j.cert' }
+    - { regexp: '^#dbms.ssl.policy.default.client_auth=require', line: '#dbms.ssl.policy.default.client_auth=NONE' }
+    - { regexp: '^#bolt.ssl_policy=legacy', line: 'bolt.ssl_policy=default' }
+
+
+
+
+
+
 - name: add graphql configuration
   lineinfile:
     path: /etc/neo4j/neo4j.conf
@@ -69,9 +91,26 @@
     insertbefore: 'BOF'
   notify: restart neo4j
 
-- name: allow connection from external addresses
-  lineinfile:
-    path: /etc/neo4j/neo4j.conf
-    line: 'dbms.connectors.default_listen_address=0.0.0.0'
-    regex: '#dbms.connectors.default_listen_address=0.0.0.0'
-  notify: restart neo4j
+- name: create directories for ssl create
+  file:
+    path: /var/lib/neo4j/certificates/{{item}}
+    state: directory
+  loop:
+    - bak
+    - trusted
+    - revoked 
+
+- name: Copy self cert to bak
+  copy: 
+    remote_src: True 
+    src: "{{ item }}"
+    dest: /var/lib/neo4j/certificates/bak
+  with_fileglob:
+    - /var/lib/neo4j/certificates/neo4j*
+
+- name: removed the old certs
+  file: 
+    path: "{{ item }}"
+    state: absent
+  with_fileglob: 
+    - /var/lib/neo4j/certificates/neo4j*
