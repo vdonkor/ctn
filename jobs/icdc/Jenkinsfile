@@ -37,6 +37,10 @@ pipeline {
       label 'icdc_maven'
     }
   }
+  parameters {
+  gitParameter branch: '', branchFilter: '.*', defaultValue: 'master', description: 'Choose the tag or branch to deploy', name: 'Tag', quickFilterEnabled: false, selectedValue: 'DEFAULT', sortMode: 'ASCENDING_SMART', tagFilter: '*', type: 'PT_TAG'
+  }
+
   triggers {
       cron('H 5 * * 1-5')
   }
