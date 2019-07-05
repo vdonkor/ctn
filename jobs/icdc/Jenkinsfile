@@ -88,7 +88,7 @@ sh label: '', script: '''
 for server in $TOMCAT01_IP $TOMCAT02_IP;
 do
 cd target && scp -i $deployer_key -o StrictHostKeyChecking=no ICDC.war jenkins@${server}:/local/deployments
-ssh deployer@${server} << EOF
+ssh jenkins@${server} << EOF
 cd /local/deployments
 sudo docker cp ICDC.war k9dc:/usr/local/tomcat/webapps
 EOF
