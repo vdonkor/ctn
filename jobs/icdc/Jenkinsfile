@@ -54,9 +54,7 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        git branch: '${params.Tag}',
-            url: 'https://github.com/CBIIT/icdc-codebase'
-            //credentialsId: 'vdonkor'
+        checkout([$class: 'GitSCM', branches: [[name: ${params.Tag}]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/CBIIT/icdc-codebase']]])
       }
     }
     stage('Build') {
