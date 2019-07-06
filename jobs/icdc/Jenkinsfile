@@ -37,7 +37,11 @@ pipeline {
       label 'icdc_maven'
     }
   }
-  properties([[$class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false], parameters([listGitBranches(branchFilter: '.*', credentialsId: '', defaultValue: '', name: 'Tag', quickFilterEnabled: false, remoteURL: 'https://github.com/CBIIT/icdc-codebase', selectedValue: 'NONE', sortMode: 'NONE', tagFilter: '.*', type: 'PT_TAG')]), pipelineTriggers([cron('H/5 * * * 1-5'), pollSCM('H/5 * * * *')])])
+  properties ([[$class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false], 
+    parameters([listGitBranches(branchFilter: '.*', credentialsId: '', defaultValue: '', name: 'Tag', quickFilterEnabled: false, remoteURL: 'https://github.com/CBIIT/icdc-codebase', selectedValue: 'NONE', sortMode: 'NONE', tagFilter: '.*', type: 'PT_TAG')]), 
+    pipelineTriggers([cron('H/5 * * * 1-5'), 
+    pollSCM('H/5 * * * *')]
+    )])
   
   options {
     timestamps()
