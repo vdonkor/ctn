@@ -35,6 +35,14 @@
     - "{{ k9dc_home }}/logs"
     - "{{ deployments }}"
 
+- name: create k9dc deployments directory
+  file:
+    path: "{{ deployments }}"
+    state: directory
+    owner: jenkins
+    group: jenkins
+
+
 - name: copy docker files
   template:
     src: "{{ item.src }}"

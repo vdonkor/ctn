@@ -87,7 +87,7 @@ pipeline {
           withCredentials([sshUserPrivateKey(credentialsId: 'deployer_ssh_key', keyFileVariable: 'deployer_key', passphraseVariable: '', usernameVariable: 'jenkins')]) {
 sh label: '', script: '''
 
-for server in $TOMCAT01_IP $TOMCAT02_IP;
+for server in $TOMCAT02_IP $TOMCAT01_IP;
 do
 pushd target
 scp -i $deployer_key -o StrictHostKeyChecking=no ICDC.war jenkins@${server}:/local/deployments
