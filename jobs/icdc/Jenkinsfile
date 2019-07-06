@@ -38,7 +38,7 @@ pipeline {
     }
   }
   parameters {
-    listGitBranches(branchFilter: '.*', credentialsId: '', defaultValue: '', name: 'Tag', quickFilterEnabled: false, remoteURL: 'https://github.com/CBIIT/icdc-codebase', selectedValue: 'NONE', sortMode: 'NONE', tagFilter: '.*', type: 'PT_TAG')
+    listGitBranches(branchFilter: '.*', credentialsId: '', defaultValue: 'master', name: 'Tag', quickFilterEnabled: false, remoteURL: 'https://github.com/CBIIT/icdc-codebase', selectedValue: 'DEFAULT', sortMode: 'NONE', tagFilter: '.*', type: 'PT_BRANCH_TAG')
   }
    triggers { 
      pollSCM('H/15 * * * 1-5') 
