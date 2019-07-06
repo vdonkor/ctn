@@ -37,10 +37,14 @@ pipeline {
       label 'icdc_maven'
     }
   }
-  properties([[$class: 'RebuildSettings', autoRebuild: true, rebuildDisabled: false], parameters([extendedChoice(bindings: '', defaultValue: 'master', description: '', groovyClasspath: '', groovyScript: '''def gettags = ("git ls-remote -t -h https://github.com/CBIIT/icdc-codebase").execute()
-  return gettags.text.readLines().collect { 
-  it.split()[1].replaceAll(\'refs/heads/\', ").replaceAll(\'refs/tags/\', ").replaceAll("\\\\^\\\\{\\\\}", ")
-  }''', multiSelectDelimiter: ',', name: 'Tag', quoteValue: false, saveJSONParameterToFile: false, type: 'PT_SINGLE_SELECT', visibleItemCount: 5)]), pipelineTriggers([pollSCM('H/5 * * * 1-5')])])
+  properties([[$class: 'RebuildSettings', 
+  autoRebuild: false, rebuildDisabled: false], 
+  parameters([listGitBranches(branchFilter: '.*', credentialsId: '', defaultValue: '', name: 'Tag', quickFilterEnabled: false, 
+  remoteURL: 'https://github.com/CBIIT/icdc-codebase', 
+  selectedValue: 'NONE', sortMode: 'NONE', tagFilter: '.*', 
+  type: 'PT_TAG')]), pipelineTriggers([cron('H/5 * * * 1-5'), 
+  pollSCM('H/5 * * * *')])])
+  
   options {
     timestamps()
   }
