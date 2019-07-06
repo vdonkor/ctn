@@ -37,14 +37,11 @@ pipeline {
       label 'icdc_maven'
     }
   }
-  properties ([ 
-    parameters([listGitBranches(branchFilter: '.*', credentialsId: '', defaultValue: '', name: 'Tag', quickFilterEnabled: false, remoteURL: 'https://github.com/CBIIT/icdc-codebase', selectedValue: 'NONE', sortMode: 'NONE', tagFilter: '.*', type: 'PT_TAG')]), 
-    pipelineTriggers([cron('H/5 * * * 1-5'), 
-    pollSCM('H/5 * * * *')]
-    )])
-  
   options {
     timestamps()
+    pollSCM('H/5 * * * *')
+    pipelineTriggers([cron('H/5 * * * 1-5')
+    parameters([listGitBranches(branchFilter: '.*', credentialsId: '', defaultValue: '', name: 'Tag', quickFilterEnabled: false, remoteURL: 'https://github.com/CBIIT/icdc-codebase', selectedValue: 'NONE', sortMode: 'NONE', tagFilter: '.*', type: 'PT_TAG')])
   }
   tools { 
     maven 'maven-3.6.1' 
