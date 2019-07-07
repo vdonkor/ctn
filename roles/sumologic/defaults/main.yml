@@ -1,2 +1,5 @@
 ---
 # defaults file for sumologic
+timezone: 'Etc/EST'
+additional_logs: []
+ephemeral_agent: true
