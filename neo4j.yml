@@ -6,5 +6,5 @@
   gather_facts: no
 
   roles:
-    - neo4j
+    # - neo4j
     - sumologic

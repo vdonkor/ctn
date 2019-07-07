@@ -14,13 +14,13 @@
   get_url:
     url: https://collectors.sumologic.com/rest/download/rpm/64
     dest: /tmp/sumologic.rpm
-  when: sumo_installed.stdout == ""
+  when: sumo_installed.results == []
 
 - name: Install SumoCollector
   yum:
     name: '/tmp/sumologic.rpm'
     state: installed
-  when: sumo_installed.stdout == ""
+  when: sumo_installed.results == []
 
 - name: copy user.properties and source configuration
   template:
