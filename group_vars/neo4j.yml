@@ -4,4 +4,4 @@ additional_logs:
     description: "{{ env }} neo4j logs"
     category: "{{env }}/db/neo4j"
     path: "/var/log/neo4j/*.log"
-    filters: []    
+    filters: ""    
