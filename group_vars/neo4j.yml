@@ -1,0 +1,6 @@
+additional_logs:
+  - name: "{{ environment }}-neo4j-logs" 
+    description: "{{ environment}} neo4j logs"
+    category: "{{environment}}/db/neo4j"
+    path: "/var/log/neo4j/*.log"
+    filters: []    

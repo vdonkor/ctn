@@ -7,3 +7,4 @@
 
   roles:
     - neo4j
+    - sumologic
