@@ -3,3 +3,4 @@
 timezone: 'Etc/EST'
 additional_logs: []
 ephemeral_agent: true
+collector_name: "{{ environment }}-neo4j"
