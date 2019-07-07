@@ -1,2 +1,6 @@
-[localhost]
-127.0.0.1
+[neo4j]
+localhost
+
+[k9dc]
+localhost
+
