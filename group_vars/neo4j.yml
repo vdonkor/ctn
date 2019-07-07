@@ -1,4 +1,4 @@
-environment: sandbox
+
 additional_logs:
   - name: "{{ environment }}-neo4j-logs" 
     description: "{{ environment}} neo4j logs"
