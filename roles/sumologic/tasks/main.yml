@@ -6,6 +6,10 @@
     list: 'SumoCollector'
   register: sumo_installed
 
+- name: show output 
+  debug:
+    msg: "{{ sumo_installed }}"
+
 - name: download sumologic rpm
   get_url:
     url: https://collectors.sumologic.com/rest/download/rpm/64
