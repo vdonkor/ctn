@@ -166,6 +166,9 @@
     insertbefore: 'BOF'
   notify: restart neo4j
 
+- name: change admin password
+  command: "curl -H "Content-Type: application/json" -XPOST -d '{"password":"{{neo4j_password}}"}' -u neo4j:icdcJenkins2**0 http://localhost:7474/user/neo4j/password"
+
 - name: newrelic task
   include_tasks: newrelic.yml
   when: newrelic is defined
