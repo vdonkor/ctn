@@ -165,3 +165,7 @@
     regex: 'dbms.directories.data=/var/lib/neo4j/data'
     insertbefore: 'BOF'
   notify: restart neo4j
+
+- name: newrelic task
+  include_tasks: newrelic
+  when: newrelic is defined

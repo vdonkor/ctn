@@ -1,0 +1,11 @@
+- name: install nodejs rpm
+  command: curl -sL https://rpm.nodesource.com/setup_12.x | bash -
+- name: install nodes and npm
+  yum:
+    name: nodejs
+    state: installed
+
+- name: install newrelic neo4j plugin
+  npm:
+    name: newrelic-neo4j
+    global: yes
