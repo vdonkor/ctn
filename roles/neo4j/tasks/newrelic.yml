@@ -1,5 +1,16 @@
-- name: install nodejs rpm
-  command: curl -sL https://rpm.nodesource.com/setup_12.x | bash -
+- name: download nodejs rpm script
+  get_url:
+    url: https://rpm.nodesource.com/setup_{{node_version}}.x 
+    dest: /tmp/nodejs.sh
+
+- name: run the nodejs.sh script
+  shell: /tmp/nodejs.sh
+
+- name: cleanup nodejs.sh file
+  file:
+    path: /tmp/nodejs.sh
+    state: absent
+    
 - name: install nodes and npm
   yum:
     name: nodejs

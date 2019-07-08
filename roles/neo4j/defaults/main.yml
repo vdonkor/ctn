@@ -1,3 +1,4 @@
 ---
 # defaults file for neo4j
 newrelic: yes
+node_version: 12
