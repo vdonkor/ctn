@@ -7,6 +7,6 @@ Type=simple
 Restart=always
 RestartSec=1
 User=root
-ExecStart=/bin/newrelic-neo4j -f
+ExecStart=/bin/newrelic-neo4j >/dev/null 2>&1 &
 [Install]
 WantedBy=multi-user.target
