@@ -167,5 +167,5 @@
   notify: restart neo4j
 
 - name: newrelic task
-  include_tasks: newrelic
+  include_tasks: newrelic.yml
   when: newrelic is defined
