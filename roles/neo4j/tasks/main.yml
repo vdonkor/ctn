@@ -53,8 +53,7 @@
     - { ltype: 'hard', litem: 'nofile', lvalue: 40000 }    
 
 - name: reload sysctl
-  sysctl:
-    reload: yes
+  command: sysctl --system
     
 - name: open neo4j data ports
   firewalld:
