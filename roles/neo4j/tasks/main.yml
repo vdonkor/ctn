@@ -42,6 +42,20 @@
     state: started
     enabled: yes
 
+- name: configure file decriptors for neo4j
+  pam_limits:
+    domain: neo4j
+    limit_type: "{{item.ltype}}"
+    limit_item: "{{item.litem}}"
+    value:      "{{item.lvalue}}"
+  with_items:    
+    - { ltype: 'soft', litem: 'nofile', lvalue: 40000 }
+    - { ltype: 'hard', litem: 'nofile', lvalue: 40000 }    
+
+- name: reload sysctl
+  sysctl:
+    reload: yes
+    
 - name: open neo4j data ports
   firewalld:
     port: "{{item}}/tcp"
