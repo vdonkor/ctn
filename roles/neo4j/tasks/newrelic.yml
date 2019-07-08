@@ -27,3 +27,6 @@
   template:
     src: newrelic-neo4j.js.j2
     dest: /etc/newrelic/newrelic-neo4j.js
+
+- name: run newrelic-neo4j
+  command: newrelic-neo4j
