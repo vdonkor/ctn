@@ -123,6 +123,27 @@
     - { regexp: '^#dbms.ssl.policy.default.client_auth=require', line: 'dbms.ssl.policy.default.client_auth=NONE' }
     - { regexp: '^#dbms.ssl.policy.default.revoked_dir=', line: 'dbms.ssl.policy.default.revoked_dir=/var/lib/neo4j/certificates/revoked' }
     - { regexp: '^#dbms.ssl.policy.default.trusted_dir=', line: 'dbms.ssl.policy.default.trusted_dir=/var/lib/neo4j/certificates/trusted' }
+    - { regexp: '^#dbms.backup.enabled=true', line: 'dbms.backup.enabled=true' }
+    - { regexp: '^#dbms.logs.query.page_logging_enabled=true', line: 'dbms.logs.query.page_logging_enabled=true' }
+    - { regexp: '^#dbms.logs.security.level=INFO', line: 'dbms.logs.security.level=INFO' }
+    - { regexp: '^#dbms.allow_upgrade=true', line: 'dbms.allow_upgrade=true' }
+    - { regexp: '^#dbms.logs.query.enabled=true', line: 'dbms.logs.query.enabled=true' }
+    - { regexp: '^#dbms.logs.query.time_logging_enabled=true', line: 'dbms.logs.query.time_logging_enabled=true' }
+    - { regexp: '^#dbms.logs.query.parameter_logging_enabled=true', line: 'dbms.logs.query.parameter_logging_enabled=true' }
+
+
+- name: Ensure the default Apache port is 8080
+  lineinfile:
+    path: /etc/neo4j/neo4j.conf
+    insertafter: 'EOF'
+    line: '{{ item }}'
+  loop:
+    - metrics.enabled=true
+    - metrics.neo4j.enabled=true
+    - metrics.neo4j.tx.enabled=true
+    - metrics.neo4j.pagecache.enabled=true
+    - metrics.neo4j.counts.enabled=true
+    - metrics.neo4j.network.enabled=true
 
 - name: add graphql configuration
   lineinfile:

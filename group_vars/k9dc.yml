@@ -1,3 +1,4 @@
+collector_name: "{{ env }}-k9dc"
 additional_logs:
   - name: "{{ env }} k9dc Logs" 
     description: "{{ env }} k9dc logs"

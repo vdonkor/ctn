@@ -1,4 +1,4 @@
-
+collector_name: "{{ env }}-neo4j"
 additional_logs:
   - name: "{{ env }} Neo4j Logs" 
     description: "{{ env }} neo4j logs"
