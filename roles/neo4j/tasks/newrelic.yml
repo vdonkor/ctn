@@ -21,3 +21,9 @@
   npm:
     name: newrelic-neo4j
     global: yes
+    unsafe_perm: yes
+
+- name: configure newrelic-neo4j
+  template:
+    src: newrelic-neo4j.js.j2
+    dest: /etc/newrelic/newrelic-neo4j.js
