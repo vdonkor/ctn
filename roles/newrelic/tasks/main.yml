@@ -27,7 +27,11 @@
       - newrelic-infra 
   environment:
     NRIA_MODE: PRIVILEGED
-    NRIA_LICENSE_KEY: "{{ newrelic_license_key }}"
+
+- name: copy newrelic config file to /etc/
+  template:
+    src: newrelic-infra.yml.j2
+    dest: /etc/newrelic-infra.yml
 
 - name: enable and start newrelic-infra service
   service:
