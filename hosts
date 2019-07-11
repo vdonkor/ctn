@@ -4,3 +4,8 @@ localhost
 [k9dc]
 localhost
 
+[newrelic]
+localhost
+
+[somologic]
+localhost
