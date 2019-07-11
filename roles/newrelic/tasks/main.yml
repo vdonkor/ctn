@@ -1,5 +1,9 @@
 ---
 # tasks file for roles/newrelic
+- name: set hostname
+  hostname:
+    name: "{{ hostname }}"
+    
 - name: setup newrelic repo
   yum_repository:
     name: newrelic-infra
