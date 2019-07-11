@@ -22,7 +22,7 @@
       - newrelic-infra 
   environment:
     NRIA_MODE: PRIVILEGED
-    NRIA_LICENSE_KEY: "{{ }}"
+    NRIA_LICENSE_KEY: "{{ newrelic_license_key }}"
 
   notify: restart newrelic-infra
 
