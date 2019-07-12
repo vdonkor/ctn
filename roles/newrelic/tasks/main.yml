@@ -21,12 +21,13 @@
 #     warn: no
 
 - name: install newrelic-infra
-  yum:
+  package:
     name:
       - libcap
-      - newrelic-infra 
-  environment:
-    NRIA_MODE: PRIVILEGED
+      - newrelic-infra
+    state: latest
+    environment:
+      NRIA_MODE: PRIVILEGED
 
 - name: copy newrelic config file to /etc/
   template:
