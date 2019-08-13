@@ -40,6 +40,10 @@ jobs:
   - script: >
       folder('icdc')
   - url: https://raw.githubusercontent.com/vdonkor/ctn/master/jobs/icdc/pipeline.groovy
+  - script: >
+      folder('icdc')
+  - url: https://raw.githubusercontent.com/CBIIT/icdc-devops/master/jenkins/jobs/canine-testing/pipeline.groovy
+
 tool:
   git:
     installations:
