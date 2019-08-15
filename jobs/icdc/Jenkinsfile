@@ -43,10 +43,17 @@ pipeline {
             name: 'Environment', 
             defaultValue: 'sandbox', 
             description: 'Choose the environment to build', 
-            type: 'PT_SINGLE_SELECT', 
-            groovyScript: "return"
-            
-        )
+            choiceType: 'PT_SINGLE_SELECT', 
+            script: [
+                    $class: 'GroovyScript', 
+                    script: [
+                        classpath: [], 
+                        sandbox: true, 
+                        script: '''
+                                    some code.....
+                                    return something'''
+                    ]]
+    )
 
   }
    triggers { 
