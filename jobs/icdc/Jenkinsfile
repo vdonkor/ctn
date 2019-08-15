@@ -49,9 +49,7 @@ pipeline {
                     script: [
                         classpath: [], 
                         sandbox: true, 
-                        script: '''
-                                    some code.....
-                                    return something'''
+                        script: ''' return ["sandbox","dev","QA","stage","prod"]'''
                     ]]
     )
 
