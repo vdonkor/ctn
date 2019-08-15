@@ -65,6 +65,23 @@ pipeline {
         checkout([$class: 'GitSCM', branches: [[name: "${params.Tag}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/CBIIT/icdc-codebase']]])
       }
     }
+    stage('Set Environment'){
+      steps {
+        def sandbox_url = k9dc.essential-dev.com
+        def dev_url = caninecommons-dev.cancer.gov
+        def qa_url = caninecommons-qa.cancer.gov
+        def stage_url = caninecommons-stage.cancer.gov
+        def prod_url = caninecommons.cancer.gov 
+        switch("${params.Environment}") {
+          case "sandbox":
+            sh "cd ${WORKSPACE}/src/main/frontend/ && sed -i 's/caninecommons-dev.cancer.gov/${sandbox_url}/g' .env"
+          break
+          default:
+          break
+        }
+        sh "cat ${WORKSPACE}/src/main/frontend/.env"
+      }
+    }
     stage('Build') {
       environment {
         TOMCAT01_IP = "${TOMCAT01_IP}"
