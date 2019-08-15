@@ -44,8 +44,8 @@ pipeline {
             defaultValue: 'sandbox', 
             description: 'Choose the environment to build', 
             type: 'PT_SINGLE_SELECT', 
-            groovyScript: valueKeysScript,
-            descriptionGroovyScript: valueNamesScript
+            groovyScript: "return"
+            
         )
 
   }
