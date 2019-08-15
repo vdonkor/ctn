@@ -50,7 +50,7 @@ pipeline {
   }
    triggers { 
      pollSCM('H/15 * * * 1-5') 
-     cron('5 * * * 1-5')
+     // cron('5 * * * 1-5')
     }
   options {
     timestamps()
@@ -95,7 +95,6 @@ pipeline {
                 println "Select valid option"
               break
             }
-            sh "cat ${WORKSPACE}/src/main/frontend/.env"
           }
         }
     }
