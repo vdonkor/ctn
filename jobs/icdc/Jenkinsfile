@@ -44,7 +44,7 @@ pipeline {
             defaultValue: 'sandbox', 
             description: 'Choose the environment to build', 
             type: 'PT_SINGLE_SELECT', 
-            script: [
+            groovyscript: [
                     $class: 'GroovyScript', 
                     script: [
                         classpath: [], 
