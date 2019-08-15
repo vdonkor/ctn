@@ -77,9 +77,22 @@ pipeline {
           script {
             switch("${params.Environment}") {
               case "sandbox":
-                sh "cd ${WORKSPACE}/src/main/frontend/ && sed -i 's/caninecommons-dev.cancer.gov/${sandbox_url}/g' .env"
+                sh "cd ${WORKSPACE}/src/main/frontend/ && sed -i 's/caninecommons-dev.cancer.gov/${SANDBOX_URL}/g' .env"
+              break
+              case "dev":
+                sh "cd ${WORKSPACE}/src/main/frontend/ && sed -i 's/caninecommons-dev.cancer.gov/${ DEV_URL}/g' .env"
+              break
+              case "qa":
+                sh "cd ${WORKSPACE}/src/main/frontend/ && sed -i 's/caninecommons-dev.cancer.gov/${ QA_URL}/g' .env"
+              break
+              case "stage":
+                sh "cd ${WORKSPACE}/src/main/frontend/ && sed -i 's/caninecommons-dev.cancer.gov/${ STAGE_URL}/g' .env"
+              break
+              case "prod":
+                sh "cd ${WORKSPACE}/src/main/frontend/ && sed -i 's/caninecommons-dev.cancer.gov/${PROD_URL}/g' .env"
               break
               default:
+                println "Select valid option"
               break
             }
             sh "cat ${WORKSPACE}/src/main/frontend/.env"
