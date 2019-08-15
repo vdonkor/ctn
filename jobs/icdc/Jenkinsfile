@@ -66,7 +66,6 @@ pipeline {
       }
     }
     stage('Set Environment'){
-      steps {
         environment {
           SANDBOX_URL = "k9dc.essential-dev.com"
           DEV_URL = "caninecommons-dev.cancer.gov"
@@ -74,17 +73,18 @@ pipeline {
           STAGE_URL = "caninecommons-stage.cancer.gov"
           PROD_URL = "caninecommons.cancer.gov" 
         }
-        script {
-          switch("${params.Environment}") {
-          case "sandbox":
-            sh "cd ${WORKSPACE}/src/main/frontend/ && sed -i 's/caninecommons-dev.cancer.gov/${sandbox_url}/g' .env"
-          break
-          default:
-          break
+        steps {
+          script {
+            switch("${params.Environment}") {
+              case "sandbox":
+                sh "cd ${WORKSPACE}/src/main/frontend/ && sed -i 's/caninecommons-dev.cancer.gov/${sandbox_url}/g' .env"
+              break
+              default:
+              break
+            }
+            sh "cat ${WORKSPACE}/src/main/frontend/.env"
+          }
         }
-        sh "cat ${WORKSPACE}/src/main/frontend/.env"
-        }
-      }
     }
     stage('Build') {
       environment {
