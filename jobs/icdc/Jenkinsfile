@@ -39,15 +39,14 @@ pipeline {
   }
   parameters {
     listGitBranches(branchFilter: '.*', credentialsId: '', defaultValue: 'master', name: 'Tag', quickFilterEnabled: false, remoteURL: 'https://github.com/CBIIT/icdc-codebase', selectedValue: 'DEFAULT', sortMode: 'NONE', tagFilter: '.*', type: 'PT_BRANCH_TAG')
-    activeChoiceParam('Environment') {
-      description('Choose the environment to build')
-      filterable()
-      choiceType('SINGLE_SELECT')
-      groovyScript {
-        script('["sandbox", "dev","QA","stage","prod"]')
-        fallbackScript('"fallback choice"')
-      }
-    }
+    activeChoiceParam(name: 'Environment', description: 'Choose the environment to build',
+      filterable: false, choiceType: 'SINGLE_SELECT',
+      script: [
+                $class: 'GroovyScript', 
+                fallbackScript: '',
+                script: '["sandbox", "dev","QA","stage","prod"]'
+              ])
+
   }
    triggers { 
      pollSCM('H/15 * * * 1-5') 
