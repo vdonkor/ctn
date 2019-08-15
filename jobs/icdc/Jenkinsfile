@@ -44,7 +44,7 @@ pipeline {
             defaultValue: 'sandbox', 
             description: 'Choose the environment to build', 
             type: 'PT_SINGLE_SELECT',
-            value: [ "sandbox","dev","QA","stage","prod"]
+            value: "sandbox","dev","QA","stage","prod"
             // groovyScript: (sandbox: true,script: 'return ["sandbox","dev","QA","stage","prod"]') 
     )
 
