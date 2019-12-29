@@ -19,7 +19,7 @@
 - name: start iptables service
   service:
     name: iptables
-    stated: started
+    state: started
     enabled: yes
 
 - name: configure ecs-agent routing
