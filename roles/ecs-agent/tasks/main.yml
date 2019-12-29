@@ -40,16 +40,18 @@
     protocol: tcp
     match: tcp
     destination: 169.254.170.2 
-    destination_port: 80
+    destination_port: '80'
     jump: REDIRECT
-    to_ports: 51679
+    to_ports: '51679'
     comment: Redirect web traffic to port 51679
 
 - name: save iptables
   command: service iptables save
+  ignore_errors: yes
 
 - name: reload iptables
   command: service iptables reload
+  ignore_errors: yes
 
 - name: create ecs directory
   file:
