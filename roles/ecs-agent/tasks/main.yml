@@ -47,11 +47,11 @@
 
 - name: save iptables
   command: service iptables save
-  ignore_errors: yes
+  warn: false
 
 - name: reload iptables
   command: service iptables reload
-  ignore_errors: yes
+  warn: false
 
 - name: create ecs directory
   file:
