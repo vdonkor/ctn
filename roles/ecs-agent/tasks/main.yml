@@ -12,7 +12,8 @@
 
 - name: install iptables
   yum:
-    name: iptables
+    name: 
+      - iptables-service
     state: present
 
 - name: start iptables service
@@ -29,8 +30,7 @@
     destination: 169.254.170.2 
     destination_port: 80
     jump: DNAT
-    to_destination: 127.0.0.1
-    to_ports: 51679
+    to_destination: 127.0.0.1:51679
     comment: configure nat
 
 - name: configure ecs-agent redirect 
