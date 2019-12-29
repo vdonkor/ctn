@@ -27,6 +27,7 @@
       - python-setuptools
       - firewalld
       - python-pip
+      - docker-compose
     state: installed
 
 - name: enable and start firewalld
