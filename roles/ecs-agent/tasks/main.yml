@@ -75,7 +75,7 @@
     detach: true
     restart_policy: on-failure
     volumes:
-      - "/var/run:/var/run"
+      - "/var/run/docker.sock:/var/run/docker.sock"
       - "/var/log/ecs/:/log"
       - "/var/lib/ecs/data:/data"
       - "/etc/ecs:/etc/ecs"
@@ -83,4 +83,9 @@
     env_file: /etc/ecs/ecs.config
     image: amazon/amazon-ecs-agent:latest
     state: started
+    env:
+      ECS_LOGFILE=/log/ecs-agent.log
+      ECS_DATADIR=/data/
+      ECS_ENABLE_TASK_IAM_ROLE=true
+      ECS_ENABLE_TASK_IAM_ROLE_NETWORK_HOST=true
     
